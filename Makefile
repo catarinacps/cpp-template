@@ -49,7 +49,7 @@ INC := -I$(INC_DIR)
 
 # Coloque aqui qualquer dependência que você deseje incluir no projeto, seguindo
 # o seguinte formato:
-# <nome> <URL> [<URL> ...]
+# "<nome> <URL> [<URL> ...]" "<nome> <URL> [<URL> ...]" ...
 DEPS :=
 
 ################################################################################
@@ -87,7 +87,7 @@ $(OBJ_DIR)/%.o:
 all: deps $(TARGET)
 
 deps:
-	@./scripts/build.sh '$(DEP_STB)'
+	@./scripts/build.sh '$(DEPS)'
 
 clean:
 	rm -f $(OBJ_DIR)/*.o $(INC_DIR)/*~ $(TARGET) *~ *.o

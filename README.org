@@ -13,19 +13,19 @@ this and copy everything inside to just start coding.
 
    I've structured the template according to the following directories:
 
-   - src :: The sources directory. Here lies all ~.cpp~ files, organized inside
+   - src/ :: The sources directory. Here lies all ~.cpp~ files, organized inside
             this folder in sub-folders if the source-code belongs to a module or
             namespace. If the file rests in the root of this directory its
             considered a ~main~ file, which will be compiled as one of the
             target executables.
-   - include :: The headers directory. If the project is following an object
+   - include/ :: The headers directory. If the project is following an object
                 oriented approach, it will very closely resemble the ~src~
                 directory, organized in sub-directories to each module.
-   - bin :: The ~.o~ directory. Here will be dumped all compiled objects.
-   - build :: The executables directory. Here is the final resting place of the
+   - bin/ :: The ~.o~ directory. Here will be dumped all compiled objects.
+   - build/ :: The executables directory. Here is the final resting place of the
               project targets.
-   - lib :: The ~.a~ directory. Dump here any static library you may be using.
-   - scripts :: The ~.sh~ directory. Any script that needs to be used during the
+   - lib/ :: The ~.a~ directory. Dump here any static library you may be using.
+   - scripts/ :: The ~.sh~ directory. Any script that needs to be used during the
                 compiling or dependency handling or whatever should stay here.
 
 ** Building
