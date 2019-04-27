@@ -86,3 +86,5 @@ this and copy everything inside to just start coding.
 **** TODO Add some lines that append the dependency file to the ~.gitignore~ in the build script
 
 **** TODO Make the build script use an ~.json~ or whatever instead of inserting thing manually into the Makefile
+
+**** TODO Rewrite all ~Makefile~ comments to english
