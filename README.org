@@ -54,11 +54,13 @@ this and copy everything inside to just start coding.
    Here is the script by the way:
 
    #+BEGIN_SRC shell
+     cd include
+
      for par in "$@"; do
          dep=($par)
 
          name=${dep[0]}
-         dir="include/$name"
+         dir="$name"
          target=("${dep[@]:1}")
 
          if [ ! -d $dir ]; then
@@ -74,9 +76,11 @@ this and copy everything inside to just start coding.
 
              echo "=> Finished downloading '$name'!"
              echo
-             cd ../..
+             cd ..
          fi
      done
+
+     cd ..
    #+END_SRC
 
 ** To-dos
@@ -86,5 +90,3 @@ this and copy everything inside to just start coding.
 **** TODO Add some lines that append the dependency file to the ~.gitignore~ in the build script
 
 **** TODO Make the build script use an ~.json~ or whatever instead of inserting thing manually into the Makefile
-
-**** TODO Rewrite all ~Makefile~ comments to english

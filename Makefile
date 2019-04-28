@@ -1,28 +1,28 @@
 #	-- cpp-template --
 #
-#	Makefile do projeto cpp-template.
+#	cpp-template's project Makefile.
 #
-#	Exemplo de utilização:
+#	Utilization example:
 #		make [<target>] [DFLAG=true]
 #
 #	@param target
-#		Pode ser as seguintes opções:
-#		all - compila.
-#		clean - limpa os binários gerados na compilação.
-#		redo - limpa binários e então compila.
-#		print-<var> - imprime o conteúdo da variável do makefile
-#                             (exemplo de uso: make print-OBJ).
+#		Can be any of the following:
+#		all - compiles.
+#		clean - cleans up all binaries generated during compilation.
+#		redo - cleans up and then compiles.
+#		print-<var> - prints the content of the Makefile variable
+#                             (example: make print-OBJ).
 #
 #	@param "DFLAG=true"
-#		Quando presente, o programa será compilado em modo debug.
+#		When present, the compilation will happen in debug mode.
 #
-#	Se make não recebe parâmetros de target, a ação default é all
+#	Make's default action is "all", when no parameters are provided.
 
 
 ################################################################################
-#	Definições:
+#	Definitions:
 
-#	-- Diretorios do projeto
+#	-- Project's directories
 INC_DIR := include
 OBJ_DIR := bin
 OUT_DIR := build
@@ -31,11 +31,11 @@ LIB_DIR := lib
 
 DFLAG :=
 
-#	-- Flags de compilação
-#	Compilador e versão da linguagem
+#	-- Compilation flags
+#	Compiler and language version
 CC := g++ -std=c++17
-#	Caso DFLAG esteja definida, ativa compilação debug e coloca o address
-#	sanitizer junto ao executável
+#	If DFLAG is defined, we'll turn on the debug flag and attach address
+#	sanitizer on the executables.
 DEBUG := $(if $(DFLAG),-g -fsanitize=address)
 CFLAGS :=\
 	-Wall \
@@ -47,40 +47,40 @@ OPT := $(if $(DFLAG),-O0,-O3)
 LIB := -L$(LIB_DIR)
 INC := -I$(INC_DIR)
 
-# Coloque aqui qualquer dependência que você deseje incluir no projeto, seguindo
-# o seguinte formato:
-# "<nome> <URL> [<URL> ...]" "<nome> <URL> [<URL> ...]" ...
+# Put here any dependencies you wish to include in the project, according to the
+# following format:
+# "<name> <URL> [<URL> ...]" "<name> <URL> [<URL> ...]" ...
 DEPS :=
 
 ################################################################################
-#	Arquivos:
+#	Files:
 
-#	-- Fonte da main
-#	Presume que todos os fontes "main" estão na raiz do diretório SRC_DIR
+#	-- Main source files
+#	Presumes that all "main" source files are in the root of SRC_DIR
 MAIN := $(wildcard $(SRC_DIR)/*.cpp)
 
-#	-- Caminho(s) do(s) binário(s) final/finais
+#	-- Path to all final binaries
 TARGET := $(patsubst %.cpp, $(OUT_DIR)/%, $(notdir $(MAIN)))
 
-#	-- Outros arquivos fonte
+#	-- Other source files
 SRC := $(filter-out $(MAIN), $(shell find $(SRC_DIR) -name '*.cpp'))
 
-#	-- Objetos a serem criados
+#	-- Objects to be created
 OBJ := $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 
 ################################################################################
-#	Regras:
+#	Rules:
 
-#	-- Executáveis
+#	-- Executables
 $(TARGET): $(OUT_DIR)/%: $(SRC_DIR)/%.cpp $(OBJ)
 	$(CC) -o $@ $^ $(INC) $(LIB) $(DEBUG) $(OPT)
 
-#	-- Objetos
+#	-- Objects
 $(OBJ_DIR)/%.o:
 	$(CC) -c -o $@ $(filter %/$*.cpp, $(SRC)) $(INC) $(CFLAGS) $(DEBUG) $(OPT)
 
 ################################################################################
-#	Alvos:
+#	Targets:
 
 .DEFAULT_GOAL = all
 
@@ -94,7 +94,7 @@ clean:
 
 redo: clean all
 
-#	Debug de variaveis da make
+#	Debug of the Make variables
 print-%:
 	@echo $* = $($*)
 
