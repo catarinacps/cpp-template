@@ -3,11 +3,13 @@
 # This script manages remote dependencies
 # ONLY SUPPORTS HEADER FILES
 
+cd include
+
 for par in "$@"; do
     dep=($par)
 
     name=${dep[0]}
-    dir="include/$name"
+    dir="$name"
     target=("${dep[@]:1}")
 
     if [ ! -d $dir ]; then
@@ -23,6 +25,8 @@ for par in "$@"; do
 
         echo "=> Finished downloading '$name'!"
         echo
-        cd ../..
+        cd ..
     fi
 done
+
+cd ..
