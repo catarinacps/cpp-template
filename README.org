@@ -89,3 +89,4 @@ this and copy everything inside to just start coding.
    - [ ] Add some lines that append the dependency file to the ~.gitignore~ in the build script
    - [ ] Make the build script use an ~.json~ or whatever instead of inserting thing manually into the Makefile
    - [X] Rewrite all ~Makefile~ commments to english
+   - [ ] Start to use Conan or whatever
