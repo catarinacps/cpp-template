@@ -3,7 +3,6 @@
 #+email: hcpsilva@inf.ufrgs.br
 #+INFOJS_OPT:
 #+PROPERTY: cache yes
-#+PROPERTY: exports both
 
 So my idea here is to for once help myself and maintain a repository with a
 blank C++ project so when I start, for example, an assignment I can just clone
@@ -11,82 +10,31 @@ this and copy everything inside to just start coding.
 
 ** Project structure
 
-   I've structured the template according to the following directories:
+I've structured the template according to the following directories:
 
-   - src/ :: The sources directory. Here lies all ~.cpp~ files, organized inside
-            this folder in sub-folders if the source-code belongs to a module or
-            namespace. If the file rests in the root of this directory its
-            considered a ~main~ file, which will be compiled as one of the
-            target executables.
-   - include/ :: The headers directory. If the project is following an object
-                oriented approach, it will very closely resemble the ~src~
-                directory, organized in sub-directories to each module.
-   - bin/ :: The ~.o~ directory. Here will be dumped all compiled objects.
-   - build/ :: The executables directory. Here is the final resting place of the
-              project targets.
-   - lib/ :: The ~.a~ directory. Dump here any static library you may be using.
-   - scripts/ :: The ~.sh~ directory. Any script that needs to be used during the
-                compiling or dependency handling or whatever should stay here.
+- cpp-template/ :: The main executable sources and headers directory. Here lies
+                   all ~.cpp~ files, organized inside this folder in sub-folders
+                   if the source-code belongs to a module or namespace.
 
-** Building
+- bin/ :: The executables directory. Here is the final resting place of the
+            project targets.
 
-   Well, since I haven't learned CMake (yet), I use a regular Makefile to
-   compile stuff. Having that considered, building is a simple shell line away:
+- build/ :: The ~CMake~ build directory, in which rests all CMake generated
+            stuff.
 
-   #+BEGIN_SRC shell
-     make
-   #+END_SRC
+- cmake/ :: Folder that keeps any CMake finder functions and such.
 
-   If you want more information, check out ~Makefile~ as it is fairly well
-   documented.
+** Build
 
-** Dependencies
+Building is just your common CMake shenanigans:
 
-   Dependency handling is, well, not great. I'd fare so much better if I used
-   CMake, but oh well.
-
-   I currently handle this stuff inserting manually into the ~Makefile~ a line
-   defining URLs to the headers (yes, headers! I don't know how to support any
-   bigger-than-an-one-file dependency), which then gets evaluated by the
-   ~scripts/build.sh~ script, that curls them and adds them to the ~include~
-   folder.
-
-   Here is the script by the way:
-
-   #+BEGIN_SRC shell
-     cd include
-
-     for par in "$@"; do
-         dep=($par)
-
-         name=${dep[0]}
-         dir="$name"
-         target=("${dep[@]:1}")
-
-         if [ ! -d $dir ]; then
-             echo "=> Dependency '$name' not found!"
-             mkdir $dir
-             cd $dir
-
-             for url in "${target[@]}"; do
-                 echo "==> Downloading $(basename $url)..."
-                 curl -O -L $url
-                 echo
-             done
-
-             echo "=> Finished downloading '$name'!"
-             echo
-             cd ..
-         fi
-     done
-
-     cd ..
-   #+END_SRC
+#+begin_src shell
+cd build/
+cmake ..
+make
+#+end_src
 
 ** To-dos
 
-   - [ ] Learn CMake
-   - [ ] Add some lines that append the dependency file to the ~.gitignore~ in the build script
-   - [ ] Make the build script use an ~.json~ or whatever instead of inserting thing manually into the Makefile
-   - [X] Rewrite all ~Makefile~ commments to english
-   - [ ] Start to use Conan or whatever
+- [X] Learn CMake
+- [ ] Start to use Conan or whatever
